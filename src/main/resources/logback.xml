@@ -6,6 +6,7 @@
         </layout>
     </appender>
 
+    <logger name="ch.qos.logback" level="ERROR"/>
    <!-- <logger name="example.loback.level.grandparents" level="TRACE"/>
     <logger name="example.logback.level.grandparents.parents.children" level="INFO"/>-->
     <root level="INFO">
