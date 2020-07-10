@@ -2,11 +2,14 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Random;
 
 public class FTPClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FTPClient.class);
     private static int count = 0;
 
     @Getter
@@ -25,7 +28,8 @@ public class FTPClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().toString() + "  [" + getIndex() + "] download file... " + System.currentTimeMillis());
+        LOGGER.info(Thread.currentThread().toString() + "  [" + getIndex() + "] download file... " + System.currentTimeMillis());
+//        System.out.println(Thread.currentThread().toString() + "  [" + getIndex() + "] download file... " + System.currentTimeMillis());
         return result;
     }
 
@@ -36,7 +40,8 @@ public class FTPClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(Thread.currentThread().toString() + "  [" + getIndex() + "] upload file... " + System.currentTimeMillis());
+        LOGGER.info(Thread.currentThread().toString() + "  [" + getIndex() + "] upload file... " + System.currentTimeMillis());
+//        System.out.println(Thread.currentThread().toString() + "  [" + getIndex() + "] upload file... " + System.currentTimeMillis());
         return result;
     }
 
