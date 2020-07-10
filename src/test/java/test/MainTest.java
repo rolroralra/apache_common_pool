@@ -1,10 +1,30 @@
 package test;
 
-import org.junit.Test;
+import org.junit.*;
 
 public class MainTest {
 
-    @Test
+    @BeforeClass
+    public static void beforeClass() {
+
+    }
+
+    @AfterClass
+    public static void afterClass() {
+
+    }
+
+    @Before
+    public void before() {
+
+    }
+
+    @After
+    public void after() {
+
+    }
+
+    @Test()
     public void test() {
 
     }
