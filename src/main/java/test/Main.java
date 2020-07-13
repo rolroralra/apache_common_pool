@@ -1,15 +1,17 @@
 package test;
 
-import connection.FTPClientPool;
-import model.FTPClient;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.apache.commons.collections.list.CursorableLinkedList;
+
+import java.lang.ref.WeakReference;
 
 public class Main {
 
     public static void main(String[] args) {
+        CursorableLinkedList cursorableLinkedList = new CursorableLinkedList();
 
 
+        WeakReference<Object> weakReference = new WeakReference<>(new Object());
+        weakReference.enqueue();
     }
 
    

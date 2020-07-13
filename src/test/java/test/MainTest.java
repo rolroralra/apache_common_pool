@@ -1,7 +1,6 @@
 package test;
 
-import connection.ConnectionConfig;
-import lombok.SneakyThrows;
+import connection.sample.ConnectionConfig;
 import model.FTPClient;
 import org.junit.*;
 import org.slf4j.Logger;
@@ -36,32 +35,37 @@ public class MainTest {
             try {
                 new Thread(new Runnable() {
                     long startTime;
+                    long middleTime;
                     long endTime;
 
                     public void run() {
-                        startTime = System.currentTimeMillis();
-                        FTPClient ftpClient = null;
+                        FTPClient ftpClient;
                         try {
+                            startTime = System.currentTimeMillis();
                             ftpClient = ConnectionConfig.objectPool.borrowObject();
+
+                            middleTime = System.currentTimeMillis();
+                            LOGGER.info("{} seconds wait...", (middleTime - startTime) / 1000);
+
                             ftpClient.download(null, null);
                             ftpClient.upload(null, null);
                             ConnectionConfig.objectPool.returnObject(ftpClient);
                         } catch (Exception e) {
+                            LOGGER.error("{}", e.getMessage(), e);
+                        } finally {
                             endTime = System.currentTimeMillis();
-                            LOGGER.error(e.toString());
-                            for (StackTraceElement stackTraceElement : e.getStackTrace()) {
-                                LOGGER.error(stackTraceElement.toString());
-                            }
-                            LOGGER.error((endTime - startTime) / 1000 + " seconds");
+                            LOGGER.info("{} seconds used...", (endTime - middleTime) / 1000);
+
+                            LOGGER.info("createCount={}", ConnectionConfig.objectPool.getCreatedCount());
+                            LOGGER.info("destroyCount={}", ConnectionConfig.objectPool.getDestroyedCount());
+                            LOGGER.info("returnCount={}", ConnectionConfig.objectPool.getReturnedCount());
+                            LOGGER.info("numIdle={}", ConnectionConfig.objectPool.getNumIdle());
                         }
 
                     }
                 }).start();
             } catch (Exception e) {
-                LOGGER.error(e.toString());
-                for (StackTraceElement stackTraceElement : e.getStackTrace()) {
-                    LOGGER.error(stackTraceElement.toString());
-                }
+                LOGGER.error("{}", e.getMessage(), e);
             }
         }
 
@@ -74,5 +78,4 @@ public class MainTest {
             }
         }
     }
-
 }

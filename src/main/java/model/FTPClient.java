@@ -28,8 +28,7 @@ public class FTPClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        LOGGER.info(Thread.currentThread().toString() + "  [" + getIndex() + "] download file... " + System.currentTimeMillis());
-//        System.out.println(Thread.currentThread().toString() + "  [" + getIndex() + "] download file... " + System.currentTimeMillis());
+        LOGGER.info("{}_{} download file...", this.getClass().getSimpleName(), getIndex());
         return result;
     }
 
@@ -40,8 +39,7 @@ public class FTPClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        LOGGER.info(Thread.currentThread().toString() + "  [" + getIndex() + "] upload file... " + System.currentTimeMillis());
-//        System.out.println(Thread.currentThread().toString() + "  [" + getIndex() + "] upload file... " + System.currentTimeMillis());
+        LOGGER.info("{} upload file...", getIndex());
         return result;
     }
 

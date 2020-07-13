@@ -1,4 +1,4 @@
-package connection;
+package connection.sample;
 
 import model.FTPClient;
 import org.apache.commons.pool2.BasePooledObjectFactory;
