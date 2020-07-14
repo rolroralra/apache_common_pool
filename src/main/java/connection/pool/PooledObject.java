@@ -1,7 +1,5 @@
 package connection.pool;
 
-import java.io.PrintWriter;
-
 public interface PooledObject<T> extends Comparable<PooledObject<T>> {
     T getObject();
 
@@ -29,9 +27,9 @@ public interface PooledObject<T> extends Comparable<PooledObject<T>> {
 
     void use();
 
-    void printStackTrace(PrintWriter var1);
+//    void printStackTrace(PrintWriter var1);
 
-    void markAbandoned();
+//    void markAbandoned();
 
     void markReturning();
 }

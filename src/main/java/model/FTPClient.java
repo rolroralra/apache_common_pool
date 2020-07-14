@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class FTPClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(FTPClient.class);
-    private static int count = 0;
+    public static int count = 0;
 
     @Getter
     @Setter
@@ -23,23 +23,31 @@ public class FTPClient {
 
     public boolean download(File remoteFile, File localFile) {
         boolean result = false;
+
+        int randomUsedSeconds = (new Random().nextInt(5) + 1);
+        LOGGER.info("{}_{} download file...   {} seconds used", this.getClass().getSimpleName(), getIndex(), randomUsedSeconds);
         try {
-            Thread.currentThread().sleep((new Random().nextInt(5) + 1) * 1000);
+            Thread.currentThread().sleep(randomUsedSeconds * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        LOGGER.info("{}_{} download file...", this.getClass().getSimpleName(), getIndex());
+
+        result = true;
         return result;
     }
 
     public boolean upload(File localFile, File remoteFile) {
         boolean result = false;
+
+        int randomUsedSeconds = (new Random().nextInt(5) + 1);
+        LOGGER.info("{}_{} upload file...   {} seconds used", this.getClass().getSimpleName(), getIndex(), randomUsedSeconds);
         try {
-            Thread.currentThread().sleep((new Random().nextInt(5) + 1) * 1000);
+            Thread.currentThread().sleep(randomUsedSeconds * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        LOGGER.info("{} upload file...", getIndex());
+
+        result = true;
         return result;
     }
 

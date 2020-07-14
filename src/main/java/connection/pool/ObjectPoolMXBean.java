@@ -21,9 +21,7 @@ public interface ObjectPoolMXBean {
 
     long getCreatedCount();
 
-    long getDestroyedCount();
-
-    long getDestroyedByBorrowValidationCount();
+    long getDeletedCount();
 
     long getMeanActiveTime();
 

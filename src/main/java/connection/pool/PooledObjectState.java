@@ -8,7 +8,7 @@ public enum PooledObjectState {
 //    VALIDATION,
 //    VALIDATION_PREALLOCATED,
 //    VALIDATION_RETURN_TO_HEAD,
-//    INVALID,
+    INVALID,
 //    ABANDONED,
     RETURNING;
 
