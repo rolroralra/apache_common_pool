@@ -12,6 +12,6 @@ public enum PooledObjectState {
 //    ABANDONED,
     RETURNING;
 
-    private PooledObjectState() {
+    PooledObjectState() {
     }
 }
