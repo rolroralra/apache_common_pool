@@ -2,6 +2,8 @@ package connection.pool.impl;
 
 import connection.pool.*;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Deque;
 import java.util.Map;
@@ -17,6 +19,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Getter
 public class DefaultObjectPool<T> extends BaseObjectPool<T> implements ObjectPool<T>, ObjectPoolMXBean {
+    private static Logger LOGGER = LoggerFactory.getLogger(DefaultObjectPool.class);
+
     @Getter
     private volatile String factoryType;
     private final PooledObjectFactory<T> pooledObjectFactory;

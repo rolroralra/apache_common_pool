@@ -31,10 +31,12 @@ public class ObjectPoolTest {
         pooledObjectFactory = new DefaultPooledObjectFactory<>(FTPClient.class);
 
         try {
-            objectPollConfig = ObjectPoolConfig.config().setMaxIdle(20).setMinIdle(20);
+            objectPollConfig = ObjectPoolConfig.config();
         } catch (IOException e) {
             objectPollConfig = new ObjectPoolConfig().setMaxIdle(20).setMinIdle(20);
         }
+
+        LOGGER.info("{}", objectPollConfig);
 
         objectPool = new DefaultObjectPool<>(pooledObjectFactory, objectPollConfig);
     }
@@ -64,7 +66,7 @@ public class ObjectPoolTest {
         ftpClient.upload(null, null);
         objectPool.returnObject(ftpClient);
 
-
+        // TODO: Weak Reference
         ftpClient.download(null, null);
         Assert.assertNotNull(ftpClient);
 
@@ -82,7 +84,7 @@ public class ObjectPoolTest {
     @Test()
     public void test() {
 
-        int testTotalClient = 100;
+        int testTotalClient = 30;
         for (int i = 0; i < testTotalClient; i++) {
             try {
                 new Thread(new Runnable() {

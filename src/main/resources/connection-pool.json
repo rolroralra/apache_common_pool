@@ -1,0 +1,5 @@
+{
+  "maxActive": 10,
+  "maxIdle": 10,
+  "minIdle": 0
+}
