@@ -186,9 +186,9 @@ public class DefaultObjectPool<T> extends BaseObjectPool<T> implements ObjectPoo
     }
 
     private void clear() {
-        while (this.idleObjects.isEmpty()) {
-            PooledObject<T> po = idleObjects.poll();
-            this.deleteObject(po);
+        while (!this.idleObjects.isEmpty()) {
+            PooledObject<T> pooledObject = idleObjects.poll();
+            this.deleteObject(pooledObject);
         }
     }
 

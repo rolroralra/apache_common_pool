@@ -1,11 +1,12 @@
 package connection.pool.impl;
 
+import connection.pool.BasePooledObject;
 import connection.pool.PooledObject;
 import connection.pool.PooledObjectState;
 import lombok.Getter;
 
 @Getter
-public class DefaultPooledObject<T> implements PooledObject<T> {
+public class DefaultPooledObject<T> extends BasePooledObject<T> implements PooledObject<T> {
     private final T object;
     private PooledObjectState state;
     private final long createTime;

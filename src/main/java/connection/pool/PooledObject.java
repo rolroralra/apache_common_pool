@@ -1,5 +1,7 @@
 package connection.pool;
 
+import java.lang.ref.WeakReference;
+
 public interface PooledObject<T> extends Comparable<PooledObject<T>> {
     T getObject();
 

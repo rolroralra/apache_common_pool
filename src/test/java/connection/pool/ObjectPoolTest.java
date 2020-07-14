@@ -7,7 +7,7 @@ import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
+import java.io.IOException;
 
 public class ObjectPoolTest {
     static Logger LOGGER = LoggerFactory.getLogger(ObjectPoolTest.class);
@@ -30,16 +30,24 @@ public class ObjectPoolTest {
     public void before() {
         pooledObjectFactory = new DefaultPooledObjectFactory<>(FTPClient.class);
 
-        objectPollConfig = new ObjectPoolConfig();
-        objectPollConfig.setMaxActive(5);
-        objectPollConfig.setMaxIdle(5);
+        try {
+            objectPollConfig = ObjectPoolConfig.config().setMaxIdle(20).setMinIdle(20);
+        } catch (IOException e) {
+            objectPollConfig = new ObjectPoolConfig().setMaxIdle(20).setMinIdle(20);
+        }
 
         objectPool = new DefaultObjectPool<>(pooledObjectFactory, objectPollConfig);
     }
 
+
+
     @After
     public void after() {
+        objectPool.close();
 
+        Assert.assertTrue(objectPool.isClosed());
+        Assert.assertEquals(objectPool.getAllObjects().size(), 0);
+        Assert.assertEquals(objectPool.getIdleObjects().size(), 0);
     }
 
     @Test
@@ -55,12 +63,26 @@ public class ObjectPoolTest {
         ftpClient.download(null, null);
         ftpClient.upload(null, null);
         objectPool.returnObject(ftpClient);
+
+
+        ftpClient.download(null, null);
+        Assert.assertNotNull(ftpClient);
+
+    }
+
+    @Test
+    public void closeTest() {
+        objectPool.close();
+
+        Assert.assertTrue(objectPool.isClosed());
+        Assert.assertEquals(objectPool.getAllObjects().size(), 0);
+        Assert.assertEquals(objectPool.getIdleObjects().size(), 0);
     }
 
     @Test()
     public void test() {
 
-        int testTotalClient = 10;
+        int testTotalClient = 100;
         for (int i = 0; i < testTotalClient; i++) {
             try {
                 new Thread(new Runnable() {
