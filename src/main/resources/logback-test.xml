@@ -7,12 +7,12 @@
     </appender>
 
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/logback.log</file>
+        <file>logs/test/logback-test.log</file>
         <encoder>
             <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/logback.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/test/logback-test.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
             <maxFileSize>100MB</maxFileSize>
             <maxHistory>7</maxHistory>
