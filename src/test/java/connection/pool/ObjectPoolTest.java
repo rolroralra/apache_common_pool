@@ -28,6 +28,8 @@ public class ObjectPoolTest {
 
     @Before
     public void before() {
+        FTPClient.count = 0;
+
         pooledObjectFactory = new DefaultPooledObjectFactory<>(FTPClient.class);
 
         try {
@@ -60,6 +62,8 @@ public class ObjectPoolTest {
         } catch (Exception e) {
             LOGGER.error("{}", e.getMessage(), e);
         }
+
+        Assert.assertNotNull(ftpClient);
         LOGGER.info("{}", ftpClient);
 
         ftpClient.download(null, null);
@@ -74,6 +78,9 @@ public class ObjectPoolTest {
 
     @Test
     public void closeTest() {
+        LOGGER.info("numberOfIdle: {}", objectPool.getNumberOfIdle());
+        LOGGER.info("numberOfActive: {}", objectPool.getNumberOfActive());
+
         objectPool.close();
 
         Assert.assertTrue(objectPool.isClosed());
@@ -84,7 +91,8 @@ public class ObjectPoolTest {
     @Test()
     public void test() {
 
-        int testTotalClient = 30;
+        int testTotalClient = 40;
+        final int[] completeCount = {0};
         for (int i = 0; i < testTotalClient; i++) {
             try {
                 new Thread(new Runnable() {
@@ -115,7 +123,7 @@ public class ObjectPoolTest {
 //                            LOGGER.info("returnCount={}", objectPool.getReturnedCount());
 //                            LOGGER.info("numIdle={}", objectPool.getNumIdle());
                         }
-
+                        completeCount[0]++;
                     }
                 }).start();
             } catch (Exception e) {
@@ -123,20 +131,15 @@ public class ObjectPoolTest {
             }
         }
 
-
-        while (Thread.activeCount() > 2 && objectPool.getNumberOfIdle() < testTotalClient) {
+        while (completeCount[0] < testTotalClient) {
             try {
                 LOGGER.info("numberOfIdle: {}", objectPool.getNumberOfIdle());
                 LOGGER.info("numberOfActive: {}", objectPool.getNumberOfActive());
-//                LOGGER.info("index: {}", FTPClient.count);
-
-//                for (PooledObject<FTPClient> pooledObject : objectPool.getAllObjects().values()) {
-//                    LOGGER.info("{}", pooledObject);
-//                }
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
 
         LOGGER.info("numberOfIdle: {}", objectPool.getNumberOfIdle());
@@ -146,5 +149,7 @@ public class ObjectPoolTest {
         for (PooledObject<FTPClient> pooledObject : objectPool.getAllObjects().values()) {
             LOGGER.info("{}", pooledObject);
         }
+
+        Assert.assertTrue(true);
     }
 }

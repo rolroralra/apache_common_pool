@@ -160,7 +160,7 @@ public class DefaultObjectPool<T> extends BaseObjectPool<T> implements ObjectPoo
             }
         }
 
-        if (!isCreatable.booleanValue()) {
+        if (!isCreatable) {
             return null;
         }
 

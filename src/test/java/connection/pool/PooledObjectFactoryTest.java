@@ -38,9 +38,9 @@ public class PooledObjectFactoryTest {
     @Test()
     public void test() {
         try {
-            objectPollConfig = ObjectPoolConfig.config().setMaxActive(5).setMaxIdle(5);
+            objectPollConfig = ObjectPoolConfig.config();
         } catch (IOException e) {
-            LOGGER.error("{}", e.getMessage(), e);
+            objectPollConfig = new ObjectPoolConfig().setMaxIdle(20).setMinIdle(20);
         }
 
         LOGGER.info("{}", objectPollConfig);
